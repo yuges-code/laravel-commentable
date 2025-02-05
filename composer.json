@@ -1,0 +1,14 @@
+{
+    "name": "root/laravel-commentable",
+    "autoload": {
+        "psr-4": {
+            "Root\\LaravelCommentable\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gosha"
+        }
+    ],
+    "require": {}
+}
