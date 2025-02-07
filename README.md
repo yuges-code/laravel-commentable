@@ -1,6 +1,11 @@
 # Laravel-commentable
 Package for easily attaching comments to Laravel eloquent models
 
+![GitHub Release](https://img.shields.io/github/v/release/yuges-code/laravel-commentable)
+![Packagist Downloads](https://img.shields.io/packagist/dt/yuges-code/laravel-commentable)
+![GitHub License](https://img.shields.io/github/license/yuges-code/laravel-commentable)
+![Packagist Stars](https://img.shields.io/packagist/stars/yuges-code/laravel-commentable)
+
 ## Installation
 
 ### Preparing the database
