@@ -6,11 +6,12 @@ use Illuminate\Support\Facades\Auth;
 use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Yuges\Commentable\Interfaces\Commentator;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
- * @property array $comments
+ * @property Collection<int, Comment> $comments
  */
 trait HasComments
 {
@@ -29,10 +30,11 @@ trait HasComments
             : null;
 
         $comment = $this->comments()->create([
+            'text' => $text,
+            'original' => $text,
+            'parent_id' => $parentId,
             'commentator_id' => $commentator?->getKey() ?? null,
             'commentator_type' => $commentator?->getMorphClass() ?? null,
-            'original_text' => $text,
-            'parent_id' => $parentId,
         ]);
 
         return $comment;
