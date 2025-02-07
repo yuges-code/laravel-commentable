@@ -6,8 +6,11 @@ return [
      */
     'models' => [
         'comment' => Yuges\Commentable\Models\Comment::class,
-        'commentators' => [
-            \App\Models\User::class,
+        'commentator' => [
+            'allowed' => [
+                \App\Models\User::class,
+            ],
+            'default' => \App\Models\User::class,
         ],
     ],
 ];
