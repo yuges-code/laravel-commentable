@@ -22,7 +22,7 @@ class ProcessCommentAction
 
     public function execute(): void
     {
-        $this->comment->text = $this->comment->original_text;
+        $this->comment->text = $this->comment->original;
 
         $this
             ->transform()
