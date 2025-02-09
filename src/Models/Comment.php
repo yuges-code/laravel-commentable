@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Traits\HasOrder;
 use Illuminate\Database\Eloquent\Model;
+use Yuges\Commentable\Traits\HasComments;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -36,7 +37,8 @@ class Comment extends Model
         HasUlids,
         HasOrder,
         HasFactory,
-        SoftDeletes;
+        SoftDeletes,
+        HasComments;
 
     protected $table = 'comments';
 
@@ -65,9 +67,14 @@ class Comment extends Model
         return $this->children();
     }
 
+    public function comments(): HasMany
+    {
+        return $this->children();
+    }
+
     public function children(): HasMany
     {
-        return $this->hasMany(Config::getCommentModel(), 'parent_id');
+        return $this->hasMany(Config::getCommentClass(), 'parent_id');
     }
 
     public function isParentless(): bool

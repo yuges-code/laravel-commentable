@@ -13,4 +13,12 @@ return [
             'default' => \App\Models\User::class,
         ],
     ],
+
+    'sanitizers' => [
+        Yuges\Commentable\Sanitizers\CommentSanitizer::class
+    ],
+
+    'transformers' => [
+        Yuges\Commentable\Transformers\CommentTransformer::class
+    ],
 ];

@@ -4,7 +4,9 @@ namespace Yuges\Commentable\Config;
 
 use Illuminate\Support\Collection;
 use Yuges\Commentable\Models\Comment;
+use Yuges\Commentable\Sanitizers\Sanitizer;
 use Yuges\Commentable\Interfaces\Commentator;
+use Yuges\Commentable\Transformers\Transformer;
 use Illuminate\Support\Facades\Config as ConfigFacade;
 
 class Config
@@ -12,13 +14,13 @@ class Config
     const string NAME = 'commentable';
 
     /** @return class-string<Comment> */
-    public static function getCommentModel(): string
+    public static function getCommentClass(): string
     {
         return self::get('models.comment');
     }
 
-    /** @return Collection<class-string<Commentator>> */
-    public static function getCommentatorAllowedModels(): Collection
+    /** @return Collection<int, class-string<Commentator>> */
+    public static function getCommentatorAllowedClasses(): Collection
     {
         return Collection::make(
             self::get('models.commentator.allowed')
@@ -26,15 +28,31 @@ class Config
     }
 
     /** @return class-string<Commentator> */
-    public static function getCommentatorDefaultModel(): string
+    public static function getCommentatorDefaultClass(): string
     {
         return Collection::make(
             self::get('models.commentator.default')
         );
     }
 
+    /** @return Collection<int, class-string<Sanitizer>> */
+    public static function getSanitizerClasses(): Collection
+    {
+        return Collection::make(
+            self::get('sanitizers')
+        );
+    }
+
+    /** @return Collection<int, class-string<Transformer>> */
+    public static function getTransformerClasses(): Collection
+    {
+        return Collection::make(
+            self::get('transformers')
+        );
+    }
+
     public static function get(string $key, mixed $default = null): mixed
     {
-        return ConfigFacade::get(self::NAME . '.' . $key);
+        return ConfigFacade::get(self::NAME . '.' . $key, $default);
     }
 }
