@@ -7,7 +7,7 @@ use Yuges\Commentable\Transformers\Transformer;
 
 class InvalidTransformer extends Exception
 {
-    public static function doesNotContainInConfig(string $class)
+    public static function doesNotContainInConfig(string $class): self
     {
         return new static("Transformer class `{$class}` doesn't contain in transformers config");
     }

@@ -2,11 +2,12 @@
 
 namespace Yuges\Commentable\Traits;
 
+use Illuminate\Support\Facades\Auth;
 use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Models\Comment;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 use Yuges\Commentable\Interfaces\Commentator;
+use Yuges\Commentable\Actions\CreateCommentAction;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
@@ -21,20 +22,14 @@ trait HasComments
 
     public function comment(string $text, Commentator $commentator = null): Comment
     {
-        /** @var Model */
-        $commentator ??= new(Config::getCommentatorDefaultClass());
+        return CreateCommentAction::create($this)->execute($text, $commentator);
+    }
 
-        $attributes = [
-            'original' => $text,
-            'commentator_id' => $commentator?->getKey() ?? null,
-            'commentator_type' => $commentator?->getMorphClass() ?? null,
-        ];
+    public function defaultComentator(): ?Commentator
+    {
+        /** @var ?Commentator */
+        $commentator = Auth::user();
 
-        if ($this instanceof Comment && $this::class === Config::getCommentClass()) {
-            $attributes['commentable_id'] = $this->commentable_id;
-            $attributes['commentable_type'] = $this->commentable_type;
-        }
-
-        return $this->comments()->create($attributes);
+        return $commentator;
     }
 }

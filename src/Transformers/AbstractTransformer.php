@@ -4,7 +4,7 @@ namespace Yuges\Commentable\Transformers;
 
 use Yuges\Commentable\Models\Comment;
 
-abstract class AbstractTransformer
+abstract class AbstractTransformer implements Transformer
 {
     public function __construct(
         public Comment $comment

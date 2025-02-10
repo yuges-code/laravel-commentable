@@ -38,7 +38,7 @@ class SanitizerFactory
             throw InvalidSanitizer::doesntExist($class);
         }
 
-        if (Config::getSanitizerClasses()->contains($class)) {
+        if (! Config::getSanitizerClasses()->contains($class)) {
             throw InvalidSanitizer::doesNotContainInConfig($class);
         }
 

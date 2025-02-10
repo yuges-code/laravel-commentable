@@ -38,7 +38,7 @@ class TransformerFactory
             throw InvalidTransformer::doesntExist($class);
         }
 
-        if (Config::getTransformerClasses()->contains($class)) {
+        if (! Config::getTransformerClasses()->contains($class)) {
             throw InvalidTransformer::doesNotContainInConfig($class);
         }
 

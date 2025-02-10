@@ -7,7 +7,7 @@ use Yuges\Commentable\Sanitizers\Sanitizer;
 
 class InvalidSanitizer extends Exception
 {
-    public static function doesNotContainInConfig(string $class)
+    public static function doesNotContainInConfig(string $class): self
     {
         return new static("Sanitizer class `{$class}` doesn't contain in sanitizers config");
     }

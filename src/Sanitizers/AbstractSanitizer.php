@@ -4,7 +4,7 @@ namespace Yuges\Commentable\Sanitizers;
 
 use Yuges\Commentable\Models\Comment;
 
-abstract class AbstractSanitizer
+abstract class AbstractSanitizer implements Sanitizer
 {
     public function __construct(
         public Comment $comment

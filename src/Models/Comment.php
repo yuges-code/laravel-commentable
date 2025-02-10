@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Yuges\Commentable\Interfaces\Commentable;
 
 /**
  * @property string $id
@@ -31,7 +32,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property-read ?Carbon $updated_at
  * @property-read ?Carbon $deleted_at
  */
-class Comment extends Model
+class Comment extends Model implements Commentable
 {
     use
         HasUlids,
