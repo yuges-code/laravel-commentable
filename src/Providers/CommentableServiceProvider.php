@@ -13,7 +13,7 @@ class CommentableServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /** @var Comment */
-        $class = Config::getCommentClass();
+        $class = Config::getCommentClass(Comment::class);
 
         if (! is_a(new $class, Comment::class)) {
             throw new Exception('Invalid comment model');

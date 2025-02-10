@@ -14,9 +14,9 @@ class Config
     const string NAME = 'commentable';
 
     /** @return class-string<Comment> */
-    public static function getCommentClass(): string
+    public static function getCommentClass(mixed $default = null): string
     {
-        return self::get('models.comment');
+        return self::get('models.comment', $default);
     }
 
     /** @return Collection<int, class-string<Commentator>> */
