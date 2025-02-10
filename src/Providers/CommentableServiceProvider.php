@@ -3,6 +3,7 @@
 namespace Yuges\Commentable\Providers;
 
 use Exception;
+use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Models\Comment;
 use Illuminate\Support\ServiceProvider;
 use Yuges\Commentable\Observers\CommentObserver;
@@ -12,7 +13,7 @@ class CommentableServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /** @var Comment */
-        $class = config('commentable.models.comment', Comment::class);
+        $class = Config::getCommentClass();
 
         if (! is_a(new $class, Comment::class)) {
             throw new Exception('Invalid comment model');

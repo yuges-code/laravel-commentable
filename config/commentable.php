@@ -7,10 +7,10 @@ return [
     'models' => [
         'comment' => Yuges\Commentable\Models\Comment::class,
         'commentator' => [
+            'default' => \App\Models\User::class,
             'allowed' => [
                 \App\Models\User::class,
             ],
-            'default' => \App\Models\User::class,
         ],
     ],
 
