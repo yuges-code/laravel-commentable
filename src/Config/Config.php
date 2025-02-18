@@ -51,6 +51,11 @@ class Config
         );
     }
 
+    public static function getPermissionsAnonymous(mixed $default = false): bool
+    {
+        return self::get('permissions.anonymous', $default);
+    }
+
     public static function get(string $key, mixed $default = null): mixed
     {
         return ConfigFacade::get(self::NAME . '.' . $key, $default);

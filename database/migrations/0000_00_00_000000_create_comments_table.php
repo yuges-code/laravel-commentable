@@ -1,5 +1,6 @@
 <?php
 
+use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Models\Comment;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -7,9 +8,9 @@ use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    public function __construct(
-        protected string $table = 'comments'
-    ) {
+    public function __construct(protected string $table = 'comments')
+    {
+        Config::getCommentClass(Comment::class)::getTableName();
     }
 
     public function up(): void
@@ -21,11 +22,16 @@ return new class extends Migration
         Schema::create($this->table, function (Blueprint $table) {
             $table->ulid('id')->primary();
 
-            $table->nullableMorphs('commentator');
-            $table->morphs('commentable');
+            Config::getPermissionsAnonymous(false)
+                ? $table->nullableMorphs('commentator')
+                : $table->morphs('commentator');
 
+            $table->morphs('commentable');
+        });
+
+        Schema::table($this->table, function (Blueprint $table) {
             $table
-                ->foreignIdFor(Comment::class, 'parent_id')
+                ->foreignIdFor(Config::getCommentClass(Comment::class), 'parent_id')
                 ->nullable()
                 ->constrained()
                 ->cascadeOnUpdate()

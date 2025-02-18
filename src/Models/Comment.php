@@ -4,16 +4,17 @@ namespace Yuges\Commentable\Models;
 
 use Carbon\Carbon;
 use Yuges\Commentable\Config\Config;
+use Yuges\Commentable\Traits\HasTable;
 use Yuges\Commentable\Traits\HasOrder;
 use Illuminate\Database\Eloquent\Model;
 use Yuges\Commentable\Traits\HasComments;
+use Yuges\Commentable\Interfaces\Commentable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Yuges\Commentable\Interfaces\Commentable;
 
 /**
  * @property string $id
@@ -36,6 +37,7 @@ class Comment extends Model implements Commentable
 {
     use
         HasUlids,
+        HasTable,
         HasOrder,
         HasFactory,
         SoftDeletes,

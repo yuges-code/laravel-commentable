@@ -14,6 +14,10 @@ return [
         ],
     ],
 
+    'permissions' => [
+        'anonymous' => false,
+    ],
+
     'sanitizers' => [
         Yuges\Commentable\Sanitizers\CommentSanitizer::class
     ],
