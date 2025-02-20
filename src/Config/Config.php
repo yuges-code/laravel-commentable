@@ -19,7 +19,7 @@ class Config
         return self::get('models.comment', $default);
     }
 
-    /** @return Collection<int, class-string<Commentator>> */
+    /** @return Collection<array-key, class-string<Commentator>> */
     public static function getCommentatorAllowedClasses(mixed $default = null): Collection
     {
         return Collection::make(
@@ -33,7 +33,7 @@ class Config
         return self::get('models.commentator.default', $default);
     }
 
-    /** @return Collection<int, class-string<Sanitizer>> */
+    /** @return Collection<array-key, class-string<Sanitizer>> */
     public static function getSanitizerClasses(mixed $default = null): Collection
     {
         return Collection::make(
@@ -41,7 +41,7 @@ class Config
         );
     }
 
-    /** @return Collection<int, class-string<Transformer>> */
+    /** @return Collection<array-key, class-string<Transformer>> */
     public static function getTransformerClasses(mixed $default = null): Collection
     {
         return Collection::make(

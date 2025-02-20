@@ -6,8 +6,8 @@ use Yuges\Commentable\Interfaces\Commentator;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property int $commentator_id
  * @property string $commentator_type
+ * @property int|string $commentator_id
  * 
  * @property Commentator $commentator
  */

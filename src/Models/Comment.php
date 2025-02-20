@@ -3,28 +3,23 @@
 namespace Yuges\Commentable\Models;
 
 use Carbon\Carbon;
-use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Traits\HasTable;
 use Yuges\Commentable\Traits\HasOrder;
 use Illuminate\Database\Eloquent\Model;
 use Yuges\Commentable\Traits\HasComments;
 use Yuges\Commentable\Traits\HasCommentator;
+use Yuges\Commentable\Traits\HasCommentable;
 use Yuges\Commentable\Interfaces\Commentable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $id
  * 
- * @property int $commentable_id
- * @property string $commentable_type
- * @property ?string $parent_id
- * @property string $original
- * @property string $text
  * @property array $extra
+ * @property string $text
+ * @property string $original
  * 
  * @property ?Carbon $approved_at
  * @property-read ?Carbon $created_at
@@ -40,7 +35,8 @@ class Comment extends Model implements Commentable
         HasFactory,
         SoftDeletes,
         HasComments,
-        HasCommentator;
+        HasCommentator,
+        HasCommentable;
 
     protected $table = 'comments';
 
@@ -52,30 +48,5 @@ class Comment extends Model implements Commentable
             'extra' => 'array',
             'approved_at' => 'datetime',
         ];
-    }
-
-    public function commentable(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    public function nested(): HasMany
-    {
-        return $this->children();
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->children();
-    }
-
-    public function children(): HasMany
-    {
-        return $this->hasMany(Config::getCommentClass(), 'parent_id');
-    }
-
-    public function isParentless(): bool
-    {
-        return ! $this->parent_id;
     }
 }
