@@ -20,34 +20,32 @@ class Config
     }
 
     /** @return Collection<int, class-string<Commentator>> */
-    public static function getCommentatorAllowedClasses(): Collection
+    public static function getCommentatorAllowedClasses(mixed $default = null): Collection
     {
         return Collection::make(
-            self::get('models.commentator.allowed')
+            self::get('models.commentator.allowed', $default)
         );
     }
 
     /** @return class-string<Commentator> */
-    public static function getCommentatorDefaultClass(): string
+    public static function getCommentatorDefaultClass(mixed $default = null): string
     {
-        return Collection::make(
-            self::get('models.commentator.default')
-        );
+        return self::get('models.commentator.default', $default);
     }
 
     /** @return Collection<int, class-string<Sanitizer>> */
-    public static function getSanitizerClasses(): Collection
+    public static function getSanitizerClasses(mixed $default = null): Collection
     {
         return Collection::make(
-            self::get('sanitizers')
+            self::get('sanitizers', $default)
         );
     }
 
     /** @return Collection<int, class-string<Transformer>> */
-    public static function getTransformerClasses(): Collection
+    public static function getTransformerClasses(mixed $default = null): Collection
     {
         return Collection::make(
-            self::get('transformers')
+            self::get('transformers', $default)
         );
     }
 

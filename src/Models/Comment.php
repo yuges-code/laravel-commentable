@@ -8,19 +8,17 @@ use Yuges\Commentable\Traits\HasTable;
 use Yuges\Commentable\Traits\HasOrder;
 use Illuminate\Database\Eloquent\Model;
 use Yuges\Commentable\Traits\HasComments;
+use Yuges\Commentable\Traits\HasCommentator;
 use Yuges\Commentable\Interfaces\Commentable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $id
  * 
- * @property int $commentator_id
- * @property string $commentator_type
  * @property int $commentable_id
  * @property string $commentable_type
  * @property ?string $parent_id
@@ -41,7 +39,8 @@ class Comment extends Model implements Commentable
         HasOrder,
         HasFactory,
         SoftDeletes,
-        HasComments;
+        HasComments,
+        HasCommentator;
 
     protected $table = 'comments';
 
@@ -56,11 +55,6 @@ class Comment extends Model implements Commentable
     }
 
     public function commentable(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    public function commentator(): BelongsTo
     {
         return $this->morphTo();
     }
