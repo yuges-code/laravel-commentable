@@ -1,15 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Yuges\Package\Database\Schema\Schema;
+use Yuges\Package\Database\Schema\Blueprint;
+use Yuges\Package\Database\Migrations\Migration;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('table', function (Blueprint $table) {
-            $table->id();
+            $table->key();
 
             # fields...
 

@@ -1,17 +1,20 @@
 {
-    "name": "yuges-code/laravel-package-template",
-    "description": "🚀 Starter template for all Yuges Laravel packages",
+    "name": "yuges-code/laravel-commentable",
+    "description": "🗯️ Package for easily attaching comments to Laravel eloquent models",
     "keywords": [
         "php",
         "yuges",
         "laravel",
         "package",
-        "template"
+        "comment",
+        "comments",
+        "commentable",
+        "laravel-commentable"
     ],
-    "homepage": "https://yuges-code.github.io/laravel-package-template",
+    "homepage": "https://yuges-code.github.io/laravel-commentable",
     "support": {
-        "source": "https://github.com/yuges-code/laravel-package-template",
-        "issues": "https://github.com/yuges-code/laravel-package-template/issues"
+        "source": "https://github.com/yuges-code/laravel-commentable",
+        "issues": "https://github.com/yuges-code/laravel-commentable/issues"
     },
     "license": "MIT",
     "authors": [
@@ -30,14 +33,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Yuges\\LaravelPackageTemplate\\": "src",
-            "Yuges\\LaravelPackageTemplate\\Database\\Seeders\\": "database/seeders/",
-            "Yuges\\LaravelPackageTemplate\\Database\\Factories\\": "database/factories/"
+            "Yuges\\Commentable\\": "src",
+            "Yuges\\Commentable\\Database\\Seeders\\": "database/seeders/",
+            "Yuges\\Commentable\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yuges\\Package\\Tests\\": "tests/src"
+            "Yuges\\Commentable\\Tests\\": "tests/src"
         }
     },
     "scripts": {
@@ -46,7 +49,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Yuges\\LaravelPackageTemplate\\Providers\\TemplateServiceProvider"
+                "Yuges\\Commentable\\Providers\\CommentableServiceProvider"
             ]
         }
     },
