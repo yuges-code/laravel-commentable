@@ -1,13 +1,10 @@
 <?php
 
-namespace Yuges\Package\Tests\Stubs\Models;
+namespace Yuges\Commentable\Tests\Stubs\Models;
 
-use Yuges\Package\Traits\HasTable;
-use Illuminate\Database\Eloquent\Model;
+use Yuges\Package\Models\Model;
 
 class User extends Model
 {
-    use HasTable;
-
     protected $table = 'users';
 }

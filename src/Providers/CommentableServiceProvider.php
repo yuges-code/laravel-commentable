@@ -2,31 +2,31 @@
 
 namespace Yuges\Commentable\Providers;
 
-use Exception;
+use Yuges\Package\Data\Package;
 use Yuges\Commentable\Config\Config;
 use Yuges\Commentable\Models\Comment;
-use Illuminate\Support\ServiceProvider;
 use Yuges\Commentable\Observers\CommentObserver;
+use Yuges\Commentable\Exceptions\InvalidComment;
+use Yuges\Package\Providers\PackageServiceProvider;
 
-class CommentableServiceProvider extends ServiceProvider
+class CommentableServiceProvider extends PackageServiceProvider
 {
-    public function boot(): void
-    {
-        /** @var Comment */
-        $class = Config::getCommentClass(Comment::class);
+    protected string $name = 'laravel-commentable';
 
-        if (! is_a(new $class, Comment::class)) {
-            throw new Exception('Invalid comment model');
+    public function configure(Package $package): void
+    {
+        $comment = Config::getCommentClass(Comment::class);
+
+        if (! is_a($comment, Comment::class, true)) {
+            throw InvalidComment::doesNotImplementComment($comment);
         }
 
-        $class::observe(new CommentObserver);
-
-        $this->publishes([
-            __DIR__.'/../../config/commentable.php' => config_path('commentable.php')
-        ], 'commentable-config');
-
-        $this->publishes([
-            __DIR__.'/../../database/migrations/' => database_path('migrations')
-        ], 'commentable-migrations');
+        $package
+            ->hasName($this->name)
+            ->hasConfig('commentable')
+            ->hasMigrations([
+                'create_comments_table',
+            ])
+            ->hasObserver($comment, CommentObserver::class);
     }
 }
