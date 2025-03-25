@@ -3,13 +3,12 @@
 namespace Yuges\Commentable\Actions;
 
 use Exception;
-use Yuges\Subscribable\Config\Config;
+use Yuges\Commentable\Config\Config;
+use Yuges\Commentable\Models\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Yuges\Commentable\Interfaces\Commentable;
 use Yuges\Commentable\Interfaces\Commentator;
-use Yuges\Commentable\Models\Comment;
-use Yuges\Subscribable\Interfaces\Subscriber;
-use Yuges\Subscribable\Exceptions\InvalidSubscriber;
+use Yuges\Commentable\Exceptions\InvalidCommentator;
 
 class CreateCommentAction
 {
@@ -25,57 +24,59 @@ class CreateCommentAction
 
     public function execute(string $text, ?Commentator $commentator = null): Comment
     {
-        $subscriber ??= $this->getDefaultSubscriber();
+        $commentator ??= $this->getDefaultComentator();
 
-        $this->validateSubscriber($subscriber);
+        $this->validateCommentator($commentator);
 
-        if (! $subscriber instanceof Model) {
-            throw new Exception('Subscriber is not eloquent model');
+        if (! $commentator instanceof Model) {
+            throw new Exception('Commentator is not eloquent model');
         }
 
         $attributes = [
-            'plan_id' => $plan?->getKey() ?? null,
-            'subscriber_id' => $subscriber?->getKey() ?? null,
-            'subscriber_type' => $subscriber?->getMorphClass() ?? null,
+            'original' => $text,
+            'commentator_id' => $commentator?->getKey() ?? null,
+            'commentator_type' => $commentator?->getMorphClass() ?? null,
         ];
 
-        $subscription = $this->subscribable
-            ->subscribableSubscriptions()
-            ->getQuery()
-            ->whereMorphedTo('subscriber', $subscriber)
-            ->first();
+        if (
+            $this->commentable instanceof Comment &&
+            get_class($this->commentable) === Config::getCommentClass()
+        ) {
+            $attributes['commentable_id'] = $this->commentable->commentable_id;
+            $attributes['commentable_type'] = $this->commentable->commentable_type;
+        }
 
-        return $subscription ?? $this->subscribable->subscribableSubscriptions()->create($attributes);
+        return $this->commentable->comments()->create($attributes);
     }
 
-    public function validateSubscriber(?Subscriber $subscriber = null): void
+    public function validateCommentator(?Commentator $commentator = null): void
     {
-        if (! $subscriber) {
+        if (! $commentator) {
             return;
         }
 
-        $class = get_class($subscriber);
-        $allowed = Config::getSubscriberAllowedClasses()->push(Config::getSubscriberDefaultClass());
+        $class = get_class($commentator);
+        $allowed = Config::getCommentatorAllowedClasses()->push(Config::getCommentatorDefaultClass());
 
         if (! $allowed->contains($class)) {
-            throw InvalidSubscriber::doesNotContainInAllowedConfig($class);
+            throw InvalidCommentator::doesNotContainInAllowedConfig($class);
         }
     }
 
-    public function getDefaultSubscriber(): ?Subscriber
+    public function getDefaultComentator(): ?Commentator
     {
-        $subscriber = $this->subscribable->defaultSubscriber();
+        $commentator = $this->commentable->defaultComentator();
 
-        if (! $subscriber) {
+        if (! $commentator) {
             return null;
         }
 
-        $class = get_class($subscriber);
+        $class = get_class($commentator);
 
-        if (Config::getSubscriberDefaultClass() !== $class) {
-            throw InvalidSubscriber::doesNotContainInDefaultConfig($class);
+        if (Config::getCommentatorDefaultClass() !== $class) {
+            throw InvalidCommentator::doesNotContainInDefaultConfig($class);
         }
 
-        return $subscriber;
+        return $commentator;
     }
 }

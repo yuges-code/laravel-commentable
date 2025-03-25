@@ -40,6 +40,6 @@ return [
 
     'actions' => [
         'create' => Yuges\Commentable\Actions\CreateCommentAction::class,
-        'delete' => Yuges\Commentable\Actions\DeleteCommentAction::class,
+        'process' => Yuges\Commentable\Actions\ProcessCommentAction::class,
     ],
 ];
