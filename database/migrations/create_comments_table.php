@@ -41,11 +41,10 @@ return new class extends Migration
             $table->longText('original');
             $table->longText('text');
             $table->json('extra')->nullable();
-            $table->unsignedBigInteger('order')->index();
+            $table->order();
 
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
