@@ -24,6 +24,17 @@ return [
                 ]
             ],
         ],
+        'commentable' => [
+            'key' => KeyType::Ulid,
+            'default' => [
+                'class' => \App\Models\User::class,
+            ],
+            'allowed' => [
+                'classes' => [
+                    \App\Models\User::class,
+                ],
+            ],
+        ],
     ],
 
     'permissions' => [
