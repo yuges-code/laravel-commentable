@@ -26,7 +26,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "yuges-code/laravel-package": "^1.0"
+        "yuges-code/laravel-package": "^1.1"
     },
     "require-dev": {
         "orchestra/testbench": "^10.0"
